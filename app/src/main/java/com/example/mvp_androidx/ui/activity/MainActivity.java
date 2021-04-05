@@ -89,8 +89,11 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
         });
 
 
-        ctlMain.addItemBindViewDataListener((holder, tabEntity, selectPosition, position) ->
-                Toast.makeText(MainActivity.this, mTitles[position], Toast.LENGTH_SHORT).show());
+        ctlMain.addItemBindViewDataListener((holder, tabEntity, selectPosition, position) -> {
+            if (selectPosition == position) {
+                Toast.makeText(MainActivity.this, mTitles[selectPosition], Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
