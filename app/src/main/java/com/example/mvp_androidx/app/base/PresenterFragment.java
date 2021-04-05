@@ -1,10 +1,7 @@
 package com.example.mvp_androidx.app.base;
 
 /**
- * @author yinhui
  * @classname: PresenterFragment
- * @Description: TODO(这里用一句话描述这个类的作用)
- * @date 2017/4/13 10:04
  */
 public abstract class PresenterFragment<T extends BasePresenter> extends BaseFragment implements BaseView {
 
