@@ -4,21 +4,22 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.mvp_androidx.R;
 import com.example.mvp_androidx.app.base.PresenterActivity;
-import com.example.mvp_androidx.model.bean.TabEntity;
 import com.example.mvp_androidx.presenter.MainPresenter;
 import com.example.mvp_androidx.presenter.contract.MainContract;
 import com.example.mvp_androidx.ui.fragment.HomeFragment;
 import com.example.mvp_androidx.ui.fragment.LikeFragment;
 import com.example.mvp_androidx.ui.fragment.MineFragment;
-import com.example.mvp_androidx.utils.ToastUtil;
-import com.flyco.tablayout.CommonTabLayout;
-import com.flyco.tablayout.listener.CustomTabEntity;
+import com.zdm.tablayout.TabEntity;
+import com.zdm.tablayout.TabInterface;
+import com.zdm.tablayout.TabLayout;
+import com.zdm.tablayout.TabRecylerAdapter;
 
 import java.util.ArrayList;
 
@@ -34,13 +35,13 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
     FrameLayout fmMain;
     @BindView(R.id.dl_main)
     DrawerLayout dlMain;
-    @BindView(R.id.ctl_main)
-    CommonTabLayout ctlMain;
+    @BindView(R.id.tabLayout)
+    TabLayout ctlMain;
     @BindView(R.id.DL_left)
     LinearLayout DLLeft;
 
     private String[] mTitles = {"首页", "收藏", "搜索"};
-    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
+    private ArrayList<TabEntity> mTabEntities = new ArrayList<>();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private int[] img_u = {R.drawable.home, R.drawable.like, R.drawable.search_tab};
     private int[] img_p = {R.drawable.home_p, R.drawable.like_p, R.drawable.search_tab_p};
@@ -86,26 +87,33 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
                 super.onDrawerStateChanged(newState);
             }
         });
+
+
+        ctlMain.addItemBindViewDataListener((holder, tabEntity, selectPosition, position) ->
+                Toast.makeText(MainActivity.this, mTitles[position], Toast.LENGTH_SHORT).show());
+
     }
 
     private void initTab() {
         mFragments.add(new HomeFragment());
         mFragments.add(new LikeFragment());
         mFragments.add(new MineFragment());
+
         for (int i = 0; i < mTitles.length; i++) {
             mTabEntities.add(new TabEntity(mTitles[i], img_p[i], img_u[i]));
         }
-        ctlMain.setTabData(mTabEntities, this, R.id.fm_main, mFragments);
+        ctlMain.bindViewData(mTabEntities, mFragments, R.id.fm_main);
+        ctlMain.defaultSelected(0);
     }
 
-    @OnClick({R.id.mp_menu, R.id.mp_search,R.id.left_home, R.id.left_like, R.id.left_search, R.id.left_suggest, R.id.left_setting, R.id.left_shape})
+    @OnClick({R.id.mp_menu, R.id.mp_search, R.id.left_home, R.id.left_like, R.id.left_search, R.id.left_suggest, R.id.left_setting, R.id.left_shape})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.mp_menu:
                 dlMain.openDrawer(DLLeft);
                 break;
             case R.id.mp_search:
-                ToastUtil.showShort(this, "搜索栏");
+                Toast.makeText(this, "搜索栏", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.left_home:
             case R.id.left_like:
@@ -113,13 +121,13 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
                 dlMain.closeDrawer(DLLeft);
                 break;
             case R.id.left_suggest:
-                ToastUtil.showShort(this,"问题与建议");
+                Toast.makeText(this, "问题与建议", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.left_setting:
-                ToastUtil.showShort(this,"设置");
+                Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.left_shape:
-                ToastUtil.showShort(this,"分享");
+                Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -137,7 +145,7 @@ public class MainActivity extends PresenterActivity<MainPresenter> implements Ma
 
     @Override
     public void showError(String msg) {
-        ToastUtil.showShort(this, msg);
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
 

@@ -18,26 +18,20 @@
             android:id="@+id/fm_main"
             android:layout_width="match_parent"
             android:background="@color/black"
+            android:layout_above="@+id/tabLayout"
             android:layout_height="match_parent"
             android:layout_below="@+id/main_top" />
 
-        <com.flyco.tablayout.CommonTabLayout
-            android:id="@+id/ctl_main"
+        <com.zdm.tablayout.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="1dp"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:background="@android:color/background_dark"
-            android:paddingBottom="1dp"
-            android:paddingTop="1dp"
-            app:tl_iconHeight="16dp"
-            app:tl_iconWidth="18dp"
-            app:tl_textsize="12sp"
-            app:tl_indicator_color="@android:color/holo_orange_light"
-            app:tl_textSelectColor="@android:color/holo_orange_light"
-            app:tl_textUnselectColor="@android:color/white"
-            app:tl_underline_color="@android:color/background_dark"
-            app:tl_underline_height="1px" />
+            android:background="@color/black"
+            app:tabResId="@layout/tab_view"
+            app:titleSelectColor="@android:color/holo_orange_light"
+            app:titleUnSelectColor="@color/white" />
 
     </RelativeLayout>
 

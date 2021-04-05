@@ -24,7 +24,7 @@ public class MineFragment extends PresenterFragment<MinePresenter> implements Mi
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.likefragment;
+        return R.layout.minefragment;
     }
 
     @Override
